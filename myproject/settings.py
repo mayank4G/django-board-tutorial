@@ -145,3 +145,8 @@ STATICFILES_DIRS = [
 # print(os.path.join(BASE_DIR, 'assets'))
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+## This tells django, after successful login where to redirect user.
+
+LOGIN_REDIRECT_URL = 'home'
