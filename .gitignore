@@ -1,2 +1,3 @@
 ## ignore sqlite file
 *.sqlite3
+.env
