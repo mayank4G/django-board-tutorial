@@ -1,46 +1,23 @@
-{% extends 'base.html' %}
-{% comment %} {% extends 'base.html' %} {% endcomment %}
+{% extends 'base_accounts.html' %}
 
-{% comment %} {% block content %}
-    <div class="container">
-        <h2>Sign up</h2>
-        <form method="post" novalidate>
+{% block title %}Sign up to Django Boards{% endblock %}
+
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10 col-sm-12">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title">Sign up</h3>
+          <form method="post" novalidate>
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Create an account</button>
-        </form>
+            {% include 'includes/form.html' %}
+            <button type="submit" class="btn btn-primary btn-block">Create an account</button>
+          </form>
+        </div>
+        <div class="card-footer text-muted text-center">
+          Already have an account? <a href="{% url 'login' %}">Log in</a>
+        </div>
+      </div>
     </div>
-{% endblock %}
-
-{% for field in form %}
-    <div class="form-group"></div>
-{% endfor %} {% endcomment %}
-
-{% load widget_tweaks %}
-
-{% for field in form %}
-  <div class="form-group">
-    {{ field.label_tag }}
-
-    {% if form.is_bound %}
-      {% if field.errors %}
-        {% render_field field class="form-control is-invalid" %}
-        {% for error in field.errors %}
-          <div class="invalid-feedback">
-            {{ error }}
-          </div>
-        {% endfor %}
-      {% else %}
-        {% render_field field class="form-control is-valid" %}
-      {% endif %}
-    {% else %}
-      {% render_field field class="form-control" %}
-    {% endif %}
-
-    {% if field.help_text %}
-      <small class="form-text text-muted">
-        {{ field.help_text }}
-      </small>
-    {% endif %}
   </div>
-{% endfor %}
+{% endblock %}
