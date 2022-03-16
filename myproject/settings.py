@@ -12,10 +12,11 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
-# import mongoengine
 
+# load env #
+from dotenv import load_dotenv
+load_dotenv()
 
-# mongoengine.connect(db=db_name, host=hostname, username=username, password=pwd)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,7 +29,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-d17-h2@%0v-hj85!(yl8cnp^vq)!hsd4h%2)4dxc_eo#=o($z0'
+SECRET_KEY = str(os.getenv('SECRET_KEY'))
+MONGODB_URL = str(os.getenv('MONGODB_URL'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -85,6 +87,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'myproject.wsgi.application'
 
 
+
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -95,7 +98,7 @@ DATABASES = {
         'NAME': 'myproject',
         'ENFORCE_SCHEMA': False,
         'CLIENT': {
-            'host': 'mongodb+srv://admin:admin@cluster0.cf6wa.mongodb.net/myproject?retryWrites=true&w=majority'
+            'host': MONGODB_URL
         }
     }
 }
