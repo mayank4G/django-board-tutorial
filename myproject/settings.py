@@ -153,3 +153,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ## This tells django, after successful login where to redirect user.
 
 LOGIN_REDIRECT_URL = 'home'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+LOGIN_URL = 'login'
