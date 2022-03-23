@@ -8,6 +8,7 @@ from boards.forms import NewTopicForm, PostForm
 from .models import Board, Topic, Post
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+import logging
 
 def user_profile(request):
     try:
@@ -23,21 +24,22 @@ def topics_post(request, pk, topic_pk):
     topic = get_object_or_404(Topic, board__pk=pk, pk=topic_pk)
     return render(request, 'topic_posts.html', { 'topic': topic })
 
-
 @login_required
 def reply_topic(request, pk, topic_pk):
+    logging.debug("pk" + str(pk))
+    logging.debug("topicpk" + str(topic_pk))
     topic = get_object_or_404(Topic, board__pk=pk, pk=topic_pk)
-    if request.method=='POST':
+    
+    if request.method == 'POST':
         form = PostForm(request.POST)
-        
         if form.is_valid():
             post = form.save(commit=False)
             post.topic = topic
             post.created_by = request.user
             post.save()
             return redirect('topics_post', pk=pk, topic_pk=topic_pk)
-        else:
-            form = PostForm()
+    else:
+        form = PostForm()
     return render(request, 'reply_topic.html', {'topic' : topic, 'form': form})
 
 
